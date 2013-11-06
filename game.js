@@ -150,6 +150,23 @@ var GameScene = enchant.Class.create(Scene, {
   }
 });
 
+var GameOverScene = enchant.Class.create(Scene, {
+  initialize: function(){
+    Scene.call(this);
+
+    var haikei = new Sprite(YokoHaba, TateHaba);
+    haikei.image = molTaniCatch.assets["img/game_over.png"];
+    this.addChild(haikei);
+  },
+
+  //画面をタッチしたらシーンを移動する
+  ontouchstart: function(){
+    molTaniCatch.titleScene = new TitleScene();
+    //pushSceneではなくreplaceSceneであることに注意する
+    molTaniCatch.replaceScene(molTaniCatch.titleScene);
+  }
+});
+
 //ブラウザがページを読み込んだときに実行する関数
 window.onload = function(){
 
@@ -165,6 +182,7 @@ window.onload = function(){
   gazou.push("img/game.png");
   gazou.push("img/print.png");
   gazou.push("img/title.png");
+  gazou.push("img/game_over.png");
 
   //mol.pngをロードします
   molTaniCatch.preload(gazou);
