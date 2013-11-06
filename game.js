@@ -59,13 +59,23 @@ var GameScene = enchant.Class.create(Scene, {
     this.addChild(haikei);
 
     //自機オブジェクト（以下、自機）をJikiクラスから作る
-    var jiki = new Jiki();
+    this.jiki = new Jiki();
 
     //自機をゲーム画面に表示する
-    this.addChild(jiki);
+    this.addChild(this.jiki);
 
-    var print = new Print();
-    this.addChild(print);
+    this.print = new Print();
+    this.addChild(this.print);
+
+  },
+
+  //毎フレーム実行
+  onenterframe: function(){
+    //Spriteが重なっているか判定
+    if(this.jiki.intersect(this.print)){
+      //プリントをGameSceneから外す
+      this.removeChild(this.print);
+    }
   }
 });
 
