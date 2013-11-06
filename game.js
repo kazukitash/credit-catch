@@ -30,6 +30,13 @@ window.onload = function(){
     //自機のy座標
     jiki.y = 300;
 
+    //自機を動かす
+    jiki.addEventListener("touchmove", function(e){
+      //touchmoveイベントにおいて関数の第一引数eはクリックした座標を返してくれる
+      jiki.x = e.x - jiki.width / 2
+      jiki.y = e.y - jiki.height / 2
+    });
+
     //自機をゲーム画面に表示する
     molTaniCatch.rootScene.addChild(jiki);
 
