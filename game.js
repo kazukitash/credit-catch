@@ -67,6 +67,29 @@ var GameScene = enchant.Class.create(Scene, {
     this.print = new Print();
     this.addChild(this.print);
 
+    //スコアを定義
+    this.score = 0;
+
+    //ラベルを作成
+    this.scoreLabel = new Label(this.score.toString());
+
+    //ラベルの幅を指定
+    this.scoreLabel.width = 600;
+
+    //ラベルの中で文字が中央に表示されるようにする
+    this.scoreLabel.textAlign = "center";
+
+    //ラベルの中のフォントを指定する
+    this.scoreLabel.font = "80px Serif";
+
+    //文字色を指定する
+    this.scoreLabel.color = "white";
+
+    //ラベルを移動する
+    this.scoreLabel.moveTo(325,250);
+
+    //gameSceneにラベルを追加する
+    this.addChild(this.scoreLabel);
   },
 
   //毎フレーム実行
