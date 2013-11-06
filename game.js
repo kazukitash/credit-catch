@@ -98,6 +98,15 @@ var GameScene = enchant.Class.create(Scene, {
     if(this.jiki.intersect(this.print)){
       //プリントをGameSceneから外す
       this.removeChild(this.print);
+
+      //プリントインスタンスを削除する
+      delete this.print
+
+      //スコアを+1する
+      this.score++;
+
+      //スコアラベルの文字に変更されたscoreを代入して表示を更新する
+      this.scoreLabel.text = this.score.toString();
     }
   }
 });
