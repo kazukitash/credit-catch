@@ -9,8 +9,13 @@ window.onload = function(){
   //ゲームのfpsを指定
   molTaniCatch.fps = 30;
 
+  //画像のPATHを配列に格納して管理する
+  var gazou = [];
+  gazou.push("img/mol.png");
+  gazou.push("img/game.png");
+
   //mol.pngをロードします
-  molTaniCatch.preload("img/mol.png")
+  molTaniCatch.preload(gazou);
 
   //この中にゲームを記述していく
   molTaniCatch.onload = function(){
@@ -44,9 +49,13 @@ window.onload = function(){
       jiki.y = e.y - jiki.height / 2
     });
 
+    //ゲームの背景画像を表示する
+    var haikei = new Sprite(YokoHaba, TateHaba);
+    haikei.image = molTaniCatch.assets["img/game.png"];
+    molTaniCatch.rootScene.addChild(haikei);
+
     //自機をゲーム画面に表示する
     molTaniCatch.rootScene.addChild(jiki);
-
   }
 
   //ゲームスタート
