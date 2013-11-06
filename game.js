@@ -112,6 +112,29 @@ var GameScene = enchant.Class.create(Scene, {
 
     //gameSceneにラベルを追加する
     this.addChild(this.scoreLabel);
+
+    this.timer = 30;
+
+    //ラベルを作成
+    this.timerLabel = new Label(this.timer.toFixed(2).toString());
+
+    //ラベルの幅を指定
+    this.timerLabel.width = 180;
+
+    //ラベルの中で文字が中央に表示されるようにする
+    this.timerLabel.textAlign = "center";
+
+    //ラベルの中のフォントを指定する
+    this.timerLabel.font = "48px Serif";
+
+    //文字色を指定する
+    this.timerLabel.color = "white";
+
+    //ラベルを移動する
+    this.timerLabel.moveTo(30, 60);
+
+    //gameSceneにラベルを追加する
+    this.addChild(this.timerLabel);
   },
 
   //毎フレーム実行
@@ -147,15 +170,33 @@ var GameScene = enchant.Class.create(Scene, {
         this.scoreLabel.text = this.score.toString();
       }
     }
+
+    //毎フレームごとに1/fps分timerを減らす
+    this.timer -= 1 / molTaniCatch.fps;
+    this.timerLabel.text = this.timer.toFixed(2).toString()
+
+    //もしtimerの値が0より小さくなったらゲーム終了
+    if(this.timer < 0){
+      //scoreをgameOverSceneの第一引数にして渡す
+      molTaniCatch.gameOverScene = new GameOverScene(this.score);
+      //pushSceneではなくreplaceSceneであることに注意する
+      molTaniCatch.replaceScene(molTaniCatch.gameOverScene);
+    }
   }
 });
 
 var GameOverScene = enchant.Class.create(Scene, {
-  initialize: function(){
+  //scoreという名前で第一引数を用いることにする
+  initialize: function(score){
     Scene.call(this);
 
     var haikei = new Sprite(YokoHaba, TateHaba);
-    haikei.image = molTaniCatch.assets["img/game_over.png"];
+    //もし修得単位数が20以上なら進級する。それ以下なら留年する
+    if(score >= 20){
+      haikei.image = molTaniCatch.assets["img/game_over2.png"];
+    } else {
+      haikei.image = molTaniCatch.assets["img/game_over1.png"];
+    }
     this.addChild(haikei);
   },
 
@@ -182,7 +223,8 @@ window.onload = function(){
   gazou.push("img/game.png");
   gazou.push("img/print.png");
   gazou.push("img/title.png");
-  gazou.push("img/game_over.png");
+  gazou.push("img/game_over1.png");
+  gazou.push("img/game_over2.png");
 
   //mol.pngをロードします
   molTaniCatch.preload(gazou);
