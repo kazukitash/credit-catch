@@ -45,7 +45,11 @@ var Print = enchant.Class.create(Sprite, {
     this.x = 300;
 
     //自機のy座標
-    this.y = 200;
+    this.y = -this.height;
+  },
+
+  onenterframe: function(){
+    this.y += 4;
   }
 });
 
@@ -64,8 +68,8 @@ var GameScene = enchant.Class.create(Scene, {
     //自機をゲーム画面に表示する
     this.addChild(this.jiki);
 
-    this.print = new Print();
-    this.addChild(this.print);
+    //たくさん出てくるプリントを配列に格納するための変数を定義する
+    this.prints = [];
 
     //スコアを定義
     this.score = 0;
@@ -94,19 +98,36 @@ var GameScene = enchant.Class.create(Scene, {
 
   //毎フレーム実行
   onenterframe: function(){
+    //30フレームに一回プリントを生成する
+    if(this.age % 30 == 0){
+      var print = new Print();
+      print.x = Math.random() * (YokoHaba - print.width);
+
+      this.addChild(print);
+
+      this.prints.push(print);
+    }
+
     //Spriteが重なっているか判定
-    if(this.jiki.intersect(this.print)){
-      //プリントをGameSceneから外す
-      this.removeChild(this.print);
+    printsLength = this.prints.length;
+    while(printsLength){
+      print = this.prints[--printsLength];
+      if(this.jiki.intersect(print)){
+        //プリントをGameSceneから外す
+        this.removeChild(print);
 
-      //プリントインスタンスを削除する
-      delete this.print
+        //プリントインスタンスを削除する
+        delete print;
 
-      //スコアを+1する
-      this.score++;
+        //消したプリントを配列からも削除する
+        this.prints.splice(printsLength, 1);
 
-      //スコアラベルの文字に変更されたscoreを代入して表示を更新する
-      this.scoreLabel.text = this.score.toString();
+        //スコアを+1する
+        this.score++;
+
+        //スコアラベルの文字に変更されたscoreを代入して表示を更新する
+        this.scoreLabel.text = this.score.toString();
+      }
     }
   }
 });
