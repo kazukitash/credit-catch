@@ -34,6 +34,23 @@ var Jiki = enchant.Class.create(Sprite, {
   }
 });
 
+//Sceneクラスを継承したgameSceneクラスを作る
+var GameScene = enchant.Class.create(Scene, {
+  initialize: function(){
+    Scene.call(this);
+    //ゲームの背景画像を表示する
+    var haikei = new Sprite(YokoHaba, TateHaba);
+    haikei.image = molTaniCatch.assets["img/game.png"];
+    this.addChild(haikei);
+
+    //自機オブジェクト（以下、自機）をJikiクラスから作る
+    var jiki = new Jiki();
+
+    //自機をゲーム画面に表示する
+    this.addChild(jiki);
+  }
+});
+
 //ブラウザがページを読み込んだときに実行する関数
 window.onload = function(){
 
@@ -53,18 +70,9 @@ window.onload = function(){
 
   //この中にゲームを記述していく
   molTaniCatch.onload = function(){
-
-    //自機オブジェクト（以下、自機）をJikiクラスから作る
-    var jiki = new Jiki();
-
-    //ゲームの背景画像を表示する
-    var haikei = new Sprite(YokoHaba, TateHaba);
-    haikei.image = molTaniCatch.assets["img/game.png"];
-    molTaniCatch.rootScene.addChild(haikei);
-
-    //自機をゲーム画面に表示する
-    molTaniCatch.rootScene.addChild(jiki);
-  }
+    this.gameScene = new GameScene();
+    this.pushScene(this.gameScene);
+  };
 
   //ゲームスタート
   molTaniCatch.start();
