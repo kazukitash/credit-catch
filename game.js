@@ -34,6 +34,21 @@ var Jiki = enchant.Class.create(Sprite, {
   }
 });
 
+//Printクラスを作る
+var Print = enchant.Class.create(Sprite, {
+  initialize: function(){
+    Sprite.call(this, 95, 100);
+
+    this.image = molTaniCatch.assets["img/print.png"];
+
+    //自機のx座標
+    this.x = 300;
+
+    //自機のy座標
+    this.y = 200;
+  }
+});
+
 //Sceneクラスを継承したgameSceneクラスを作る
 var GameScene = enchant.Class.create(Scene, {
   initialize: function(){
@@ -48,6 +63,9 @@ var GameScene = enchant.Class.create(Scene, {
 
     //自機をゲーム画面に表示する
     this.addChild(jiki);
+
+    var print = new Print();
+    this.addChild(print);
   }
 });
 
@@ -64,6 +82,7 @@ window.onload = function(){
   var gazou = [];
   gazou.push("img/mol.png");
   gazou.push("img/game.png");
+  gazou.push("img/print.png");
 
   //mol.pngをロードします
   molTaniCatch.preload(gazou);
