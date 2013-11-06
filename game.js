@@ -17,7 +17,7 @@ var Jiki = enchant.Class.create(Sprite, {
     this.x = 120;
 
     //自機のy座標
-    this.y = 300;
+    this.y = 500;
   },
 
   ontouchmove: function(e){
@@ -29,8 +29,8 @@ var Jiki = enchant.Class.create(Sprite, {
     }
 
     //touchmoveイベントにおいて関数の第一引数eはクリックした座標を返してくれる
-    this.x = e.x - this.width / 2
-    this.y = e.y - this.height / 2
+    this.x = e.x - this.width / 2;
+    // this.y = e.y - this.height / 2
   }
 });
 
