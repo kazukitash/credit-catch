@@ -32,6 +32,13 @@ window.onload = function(){
 
     //自機を動かす
     jiki.addEventListener("touchmove", function(e){
+      //動きの左右を判定して自機の画像を変更する
+      if(e.x - jiki.width / 2 > jiki.x){
+        jiki.frame = 0;
+      } else if(e.x - jiki.width / 2 < jiki.x){
+        jiki.frame = 1;
+      }
+
       //touchmoveイベントにおいて関数の第一引数eはクリックした座標を返してくれる
       jiki.x = e.x - jiki.width / 2
       jiki.y = e.y - jiki.height / 2
